@@ -1,3 +1,4 @@
+[Installing MySQL on linux documentation](https://dev.mysql.com/doc/mysql-installation-excerpt/8.0/en/linux-installation.html)
 > File names might not be accurate as new versions are released
 # Download the repository
 `wget https://dev.mysql.com/get/mysql-apt-config_0.8.23-1_all.deb`
