@@ -1,0 +1,24 @@
+SELECT
+    a.TABLE_SCHEMA AS `SCHEMA`,
+    a.TABLE_NAME AS `NAME`,
+    GROUP_CONCAT(a.COLUMN_NAME) AS `COLUMN`,
+    GROUP_CONCAT(a.column_type) AS `TYPE`,
+    sum(b.TABLE_ROWS) AS `ROWS`
+FROM
+    information_schema.COLUMNS AS a
+    JOIN information_schema.TABLES AS b ON b.TABLE_NAME = a.TABLE_NAME
+    AND b.TABLE_SCHEMA = a.TABLE_SCHEMA
+WHERE
+    b.TABLE_SCHEMA NOT IN ('mysql')
+    AND COLUMN_KEY = 'PRI'
+    AND ENGINE IN ('InnoDB', 'TokuDB')
+    AND (
+        DATA_TYPE LIKE '%TEXT%'
+        OR DATA_TYPE LIKE '%BLOB%'
+        OR DATA_TYPE LIKE '%CHAR%'
+        OR DATA_TYPE LIKE '%BINARY%'
+    )
+    AND TABLE_ROWS > 1000
+GROUP BY
+    a.TABLE_SCHEMA,
+    a.TABLE_NAME;
